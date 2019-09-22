@@ -1,0 +1,113 @@
+/* implementation of stack using linkedlist*/
+
+#include<stdio.h>
+#include<stdlib.h>
+#define CAPACITY 5
+void push(int data);
+void pop();
+int isEmpty();
+int isFull();
+void display();
+void peek();
+int size();
+struct node
+{
+    int data;
+    struct node* next;
+};
+struct node* root=NULL;
+int top=0;
+void main()
+{
+    int ch,data;
+    while(1)
+    {
+    printf("enter ur choice between 1 and 5");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1:printf("enter element");
+               scanf("%d",&data);
+               push(data);
+               break;
+        case 2:pop();
+               break;
+        case 3:display();
+                break;
+        case 4:peek();
+                break;
+        case 5:size();
+               break;
+        default:printf("invalid");
+    }
+    }
+}
+void push(int data)
+{
+    struct node* temp=(struct node* )malloc(sizeof(struct node));
+    if(isFull())
+       printf("stack is overflow");
+       else
+       {
+           temp->data=data;
+           temp->next = root;
+           root = temp;
+           top++;
+       }
+}
+void pop()
+{
+    struct node* temp=root;
+    if(isEmpty())
+       printf("stack underflow");
+    else
+    {
+       root = temp->next; 
+       printf("%d \n",temp->data);
+       free(temp);
+        top--;   
+    }
+}
+void display()
+{
+   struct node* temp;
+   temp=root;
+   if(isEmpty())
+       printf("stack underflow");
+    else
+    {
+        while((temp)!=NULL)
+        {
+            printf("%d ",temp->data);
+            temp = temp->next;
+        }
+    }
+}
+int isFull()
+{
+    if (top == CAPACITY )
+       return 1;
+    else
+        return 0;
+       
+}
+int isEmpty()
+{
+    if(root==NULL)
+       return 1;
+    else 
+    return 0;
+}
+void peek()
+{
+    struct node* temp=root;
+    printf("%d \n",temp->data);
+}
+int size()
+{
+    return top;
+}
+
+
+
+

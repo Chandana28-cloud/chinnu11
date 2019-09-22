@@ -1,0 +1,40 @@
+/* power of x^n mod m */
+/* approach1 */
+
+#include<stdio.h>
+void main()
+{
+    int n,x,i,mul=1,m,op;
+    printf("enter x and n to find x^n");
+    scanf("%d%d",&x,&n);
+    printf("enter m value");
+    scanf("%d",&m);
+    for(i=0;i<n;i++)
+     mul=mul*x;
+     op=mul%m;
+    printf("%d",op);    
+}
+
+/* approach2 */
+
+#include<stdio.h>
+int powerMod(int x,int n)
+{
+    int m,power,t;
+    if(n==0)
+       return 1;
+    else
+     return x*powerMod(x,n-1);
+}
+void main()
+{
+    int x,n,m;
+    printf("enter x and n to find x^n");
+    scanf("%d%d",&x,&n);
+    printf("enter m value");
+    scanf("%d",&m);
+    printf(" x^n is %d",(powerMod(x,n)%m));
+}
+
+/* approach3 */
+

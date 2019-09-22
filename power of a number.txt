@@ -1,0 +1,32 @@
+/* power of number */
+/* approach1 */
+
+#include<stdio.h>
+void main()
+{
+    int n,x,i,mul=1;
+    printf("enter x and n to find x^n");
+    scanf("%d%d",&x,&n);
+    for(i=0;i<n;i++)
+       mul=mul*x;
+    printf("%d",mul);    
+}
+
+/* approach2 */
+
+#include<stdio.h>
+int power(int x,int n)
+{
+    if(n==0)
+       return 1;
+    else
+       return x*power(x,n-1);
+}
+void main()
+{
+    int x,n;
+    printf("enter x and n to find x^n");
+    scanf("%d%d",&x,&n);
+    printf(" x^n is %d",power(x,n));
+}
+

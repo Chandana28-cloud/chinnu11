@@ -1,0 +1,255 @@
+#include<stdio.h>
+#include<stdlib.h>
+void insertAtBegin(int data);
+void insertAtEnd(int data);
+void insertAtLocation(int data);
+void deleteAtFirst();
+void deleteAtEnd();
+void deleteAtLocation();
+void display();
+int length();
+void loopExistsOrNot();
+struct node
+{
+    int data;
+    struct node*next;
+};
+struct node* root =NULL;
+void insertAtBegin(int data)
+{
+   struct node* temp = (struct node* )malloc(sizeof(struct node));
+   temp->data=data;
+   if(root==NULL)
+      root=temp;
+   else
+   {
+       temp->next=root;
+       root=temp;
+   }
+}
+void insertAtEnd(int data)
+{
+    struct node *temp=(struct node* )malloc(sizeof(struct node));
+    temp->data=data;
+    if(root==NULL)
+      root=temp;
+     else
+     {
+            struct node* p=root;
+            while((p->next)!=NULL)
+            {
+                p=p->next;
+            }
+            p->next=temp;
+     }
+}
+void insertAtLocation(int data)
+{
+    int i=1,loc;
+    struct node *temp=(struct node* )malloc(sizeof(struct node));
+    temp->data=data;
+    if(root==NULL)
+      root=temp;
+    else
+    {
+        printf("enter location");
+        scanf("%d",&loc);
+        struct node* p=root;
+        while(i<loc-1)
+        {
+            p=p->next;
+            i++;
+        }
+        temp->next=p->next;
+        p->next=temp;
+    }
+}
+void deleteAtFirst()
+{
+    struct node* temp=root;
+    if(root==NULL)
+      printf("deletion is not possible");
+    else
+    {
+        root=temp->next;
+        temp->next=NULL;
+        printf("%d \n",temp->data);
+        free(temp);
+    }
+}
+void deleteAtEnd()
+{
+    struct node* p=root;
+    struct node* temp=p->next;
+    if(root==NULL)
+      printf("deletion is not possible");
+    else 
+    {
+        while((temp->next)!=NULL)
+        {
+             temp=temp->next;
+             p=p->next;
+        }
+        p->next=NULL;
+        printf("%d \n",temp->data);
+        free(temp);
+    }
+}
+void deleteAtLocation()
+{
+    int i=1,loc;
+    struct node* temp=root;
+    struct node* p;
+    if(root==NULL)
+      printf("deletion is not possible");
+    else 
+    {
+        printf("enter location");
+        scanf("%d",&loc);
+        while(i<loc-1)
+        {
+           temp=temp->next;
+           i++;
+        }
+        p=temp->next;
+        temp->next=temp->next->next;
+        p->next=NULL;
+        printf("%d \n",p->data);
+        free(p);
+    }
+}
+void display()
+{
+    struct node* temp=root;
+    while((temp)!=NULL)
+    {
+        printf("%d \n",temp->data);
+        temp=temp->next;
+    }
+}
+int length()
+{
+ int count=0,flag;
+    struct node* temp=root;
+   while(temp!=NULL)
+   {
+      struct node* temp1=root;
+       while(temp1!=temp)
+       {
+          if((temp->next) == temp1)
+          {
+              count++;
+              flag=1;
+              break;
+          }
+          temp1=temp1->next;
+       }
+       temp=temp->next;
+       if(flag==1)
+           break;
+   }
+    return count;
+ }
+void loopExistsOrNot()
+{
+/* approach 1*/
+
+   int flag =0;
+   struct node* temp=root;
+   temp=temp->next;
+   while(temp!=NULL)
+   {
+      struct node* temp1=root;
+       while(temp1!=temp)
+       {
+          if((temp->next) == temp1)
+          {
+              printf("loop exists");
+              flag=1;
+              break;
+          }
+          temp1=temp1->next;
+       }
+       temp=temp->next;
+       if(flag==1)
+       break;
+   }
+   if(flag==0)
+      printf("loop doesnot exists");
+
+/*approach 2*/
+
+ int a[100],l,i,j;
+   l=length();
+   struct node* temp=root;
+   for(i=0;i<l;i++)
+   {
+       a[i]=temp;
+       temp=temp->next;
+   }
+   for(i=1;i<l;i++)
+   {
+      for(j=0;j<i;j++)
+      {
+          if(a[i]==a[j])
+              printf("loop exists");
+      }
+   }
+
+/* approach 3*/
+
+ struct node* slow=root;
+  struct node*fast=root;
+  while(slow!=NULL || fast!=NULL)
+  {
+      slow=slow->next;
+      fast=fast->next->next;
+      if(slow==fast)
+      {
+          printf("loop exists");
+          break;
+      }
+  }
+}
+void main()
+{
+    int ch,data,len,loc;
+    while(1)
+    {
+    printf("enter ur choice");
+    scanf("%d",&ch);
+    switch(ch)
+    {
+        case 1:printf("enter element");
+               scanf("%d",&data);
+               insertAtBegin(data);
+               break;
+        case 2:printf("enter element");
+               scanf("%d",&data);
+               insertAtEnd(data);
+               break;
+        case 3:printf("enter element");
+               scanf("%d",&data);
+               insertAtLocation(data);
+               break;
+        case 4:deleteAtFirst();
+                break;
+        case 5:deleteAtEnd();
+               break;
+        case 6:deleteAtLocation();
+               break;
+        case 7:display();
+               break;
+        case 8:len=length();
+               printf("%d",len);
+               break;
+        case 9:loopExistsOrNot();
+               break;
+        default:printf("invalid");
+    }
+    }
+}
+
+
+
+   

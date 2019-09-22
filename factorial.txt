@@ -1,0 +1,32 @@
+/* fibanocci series */
+/* approach1 */
+
+#include<stdio.h>
+void main()
+{
+    int n,i,fact=1;
+    printf("enter no to find factorial");
+    scanf("%d",&n);
+    for(i=1;i<=n;i++)
+      fact=fact*i;
+    printf("factorial of %d is %d",n,fact);  
+}
+
+/* approach2 */
+
+#include<stdio.h>
+int fact(int n)
+{
+    if(n==0 || n==1)
+      return 1;
+    else 
+      return (n*(n-1)*fact(n-2));
+}
+void main()
+{ 
+    int n;
+   printf("enter no to factorial");
+   scanf("%d",&n);
+   printf("factorial of %d is %d",n,fact(n));
+}
+ 

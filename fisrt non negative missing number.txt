@@ -1,0 +1,174 @@
+/* finding the missing positive elements */
+/* approach1 */
+
+#include<stdio.h>
+void main()
+{
+    int n,a[100],i,min=100,max=0,flag,j=0,arr[100],k,t=0;
+    printf("enter no of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+       scanf("%d",&a[i]);
+    for(i=0;i<n;i++)
+    {
+        if(a[i]<min)
+           min=a[i]; 
+        if(a[i]>max)
+            max=a[i];
+    }
+    for(i=min;i<=max;i++)
+    {
+        arr[j]=i;
+        j++;
+    }
+    for(k=0;k<j;k++) 
+    {
+      for(i=0;i<n;i++)
+      {
+        if(arr[k]==a[i])
+        {
+           t++;
+           flag=1;
+           break;
+        }
+        else 
+        flag=0;
+      }
+      if(flag==0 && arr[k]>0)
+      {
+        printf("missing elements is: %d",arr[k]);
+          break;
+      }
+    }
+     if(t==n)
+      printf("missing elemen is %d",(max+1));
+}
+
+/* approach2 */
+
+#include<stdio.h>
+void main()
+{
+    int n,a[100],i,min=100,max=0,flag,j,t=0;
+    printf("enter no of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+       scanf("%d",&a[i]);
+    for(i=0;i<n;i++)
+    {
+        if(a[i]<min)
+        {
+           min=a[i]; 
+        }
+        if(a[i]>max)
+        {
+            max=a[i];
+        }
+    }
+    for(i=min;i<=max;i++)
+    {
+        for(j=0;j<n;j++)
+        {
+            if(i==a[j])
+            {
+               t++;
+               flag=1;
+               break;
+            }
+            else
+               flag=0;
+        }
+       if((flag==0) && (i>0))
+       {
+          printf("missing element is: %d",i);
+          break;
+       }
+    }
+    if(t==n)
+      printf("missing elemen is %d",(max+1));
+}
+
+/* approach3 */
+
+#include<stdio.h>
+void merge(int arr[], int s, int m, int e) ;
+void mergeSort(int arr[], int s, int e);
+void merge(int arr[], int s, int m, int e) 
+{ 
+    int i, j, k; 
+    int n1 = m - s + 1; 
+    int n2 =  e - m; 
+    int L[n1], R[n2]; 
+   for (i = 0; i < n1; i++) 
+        L[i] = arr[s + i]; 
+    for (j = 0; j < n2; j++) 
+        R[j] = arr[m + 1+ j]; 
+ 
+    i = 0; 
+    j = 0; 
+    k = s; 
+    while (i < n1 && j < n2) 
+    { 
+        if (L[i] <= R[j]) 
+        { 
+            arr[k] = L[i]; 
+            i++; 
+        } 
+        else
+        { 
+            arr[k] = R[j]; 
+            j++; 
+        } 
+        k++; 
+    } 
+    while (i < n1) 
+    { 
+        arr[k] = L[i]; 
+        i++; 
+        k++; 
+    } 
+    while (j < n2) 
+    { 
+        arr[k] = R[j]; 
+        j++; 
+        k++; 
+    } 
+} 
+void mergeSort(int arr[], int s, int e) 
+{ 
+    if (s < e) 
+    { 
+        int m = s+(e-s)/2; 
+  
+        mergeSort(arr, s, m); 
+        mergeSort(arr, m+1, e); 
+  
+        merge(arr, s, m, e); 
+    } 
+} 
+void main() 
+{  int arr[100],size,a[100],i,j=0,min,max;
+    printf("enter no of elements:");
+    scanf("%d",&size);
+    printf("enter elements:");
+    for (i=0; i<size; i++) 
+        scanf("%d ", &arr[i]);
+    mergeSort(arr, 0,size - 1);
+    min=arr[0];max=arr[size-1];
+    for(i=min;i<=max;i++)
+    {
+       a[j]=i;
+       j++;
+    }
+     for(i=0;i<size;i++)
+     {
+         if(a[i]!=arr[i])
+         {
+           printf("%d",a[i]);
+           break;
+         }
+     }
+} 
+
