@@ -1,0 +1,27 @@
+/* 90 degree of an array */
+
+#include<stdio.h>
+int main()
+{
+    int i,j,k,l,n,a[8][8];
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+          scanf("%d",&a[i][j]);
+    }
+    l=0;
+    for(i=0;i<n;i++)
+    {
+        k=n-1;
+        for(j=0;j<n;j++)
+        {
+            printf("%d",a[k][l]);
+            if(j<n-1)
+             printf(" ");
+            k--; 
+        }
+        printf("\n");
+        l++;
+    }
+}

@@ -1,0 +1,35 @@
+/* reverese diagonal elements */
+
+#include<stdio.h>
+int main()
+{
+    int a[10][10],i,j,n,r,c;
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        for(j=0;j<n;j++)
+           scanf("%d",&a[i][j]);
+    }
+    for(i=0;i<n;i++)
+    {
+        r=0;c=i;
+        while(r<=i && c>=0)
+        {
+            printf("%d ",a[r][c]);
+            r++;
+            c--;
+        }
+        printf("\n");
+    }
+    for(i=1;i<n;i++)
+    {
+        r=i;c=n-1;
+        while(r<=3 && c>=i)
+        {
+            printf("%d ",a[r][c]);
+            r++;
+            c--;
+        }
+        printf("\n");
+    }
+}

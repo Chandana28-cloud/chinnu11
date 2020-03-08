@@ -1,0 +1,93 @@
+/* mid element */
+/* approach1 */
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *nxt;
+};
+struct node *head=NULL;
+void main()
+{
+    int i,n,l=0;
+    scanf("%d",&n);
+    struct node *temp;
+    struct node *temp1;
+    for(i=0;i<n;i++)
+    {
+       struct node *temp1=(struct node *)malloc(sizeof(struct node));
+        scanf("%d",&temp1->data);
+        if(head==NULL)
+        {
+            head=temp1;
+            temp=temp1;
+        }
+        else
+        {
+            temp->nxt=temp1;
+            temp=temp1;
+        }
+    }
+    temp=head;
+    while(temp!=NULL)
+    {
+        l++;
+        temp=temp->nxt;
+    }
+    if(l%2==0)
+     n=l/2;
+    else
+     n=((l/2)+1);
+     i=1;
+     temp=head;
+    while(i<n)
+    {
+        temp=temp->nxt;
+        i++;
+    }
+    printf("%d ",temp->data);
+}
+
+
+/* approach2 */
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *nxt;
+};
+struct node *head=NULL;
+void main()
+{
+    int i,n,l=0;
+    scanf("%d",&n);
+    struct node *temp;
+    struct node *temp1;
+    for(i=0;i<n;i++)
+    {
+       struct node *temp1=(struct node *)malloc(sizeof(struct node));
+        scanf("%d",&temp1->data);
+        if(head==NULL)
+        {
+            head=temp1;
+            temp=temp1;
+        }
+        else
+        {
+            temp->nxt=temp1;
+            temp=temp1;
+        }
+    }
+   temp=head;
+   struct node *p=head;
+   while((temp->nxt)!=NULL && (temp->nxt->nxt)!=NULL)
+   {
+       p=p->nxt;
+       temp=temp->nxt->nxt;
+   }
+   printf("%d ",p->data);
+}

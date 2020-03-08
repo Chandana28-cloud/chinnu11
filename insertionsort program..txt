@@ -1,0 +1,46 @@
+// insertionsort in inserting element in fixed place.
+// time complexity-->O(n2) in worst ,average case.
+//                -->O(n) in best case.
+// space complexity is-->O(1)
+// it is inplace, adaptive and stable.
+//It is linear incase of sorted input.
+//n2/4 comparisions ,n2/8 swaps.
+
+#include<stdio.h>
+void insertionsort(int a[],int high);
+void printArray(int a[],int n);
+// main funtion to called all the functions and getting elements
+int main()
+{
+    int i,n,a[100];
+    printf("enter no of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+      scanf("%d",&a[i]);
+    insertionsort(a,n); // function calling of insertion sort. 
+    printArray(a,n);
+      return 0;
+}
+// insertion sort function to get sorted elements.
+void insertionsort(int a[],int high)
+{
+  int temp,j=0;
+  for(int i=1;i<high;i++)
+  {
+    temp=a[i];  // fixing one value to insert in exact place.
+    j=i-1;
+    while(j>=0 && temp<a[j])
+        a[j+1]=a[j--];      // shifting the elements until get exactfixed value is lesser than loop value..
+    a[j+1]=temp;   // fixed value is placed in exactly position.  
+  }
+}
+// function to print sorted array elements.
+
+void printArray(int a[],int n)
+{
+    printf("elements after sorted are : \n");
+    for(int i=0;i<n;i++)
+        printf("%d ",a[i]);
+}
+

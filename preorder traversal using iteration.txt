@@ -1,0 +1,91 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+
+struct node {
+    
+    int data;
+    struct node *left;
+    struct node *right;
+  
+};
+
+struct node* insert( struct node* root, int data ) {
+		
+	if(root == NULL) {
+	
+        struct node* node = (struct node*)malloc(sizeof(struct node));
+
+        node->data = data;
+
+        node->left = NULL;
+        node->right = NULL;
+        return node;
+	  
+	} else {
+      
+		struct node* cur;
+		
+		if(data <= root->data) {
+            cur = insert(root->left, data);
+            root->left = cur;
+		} else {
+            cur = insert(root->right, data);
+            root->right = cur;
+		}
+	
+		return root;
+	}
+}
+
+void preOrder(struct node* root)
+{
+     int top=0;
+    struct node* temp=root;
+    struct node* stack[500];
+    while(top!=-1 || temp->right!=NULL || temp->left!=NULL)
+    {
+        if(temp->left!=NULL)
+        { 
+            top--;       
+            printf("%d ",temp->data);
+            if(temp->right!=NULL)
+              stack[++top]=temp->right;
+            stack[++top]=temp->left;  
+            temp=stack[top];
+        }
+        else 
+        {
+            printf("%d ",temp->data);
+            top--;
+            if(temp->right== NULL)
+                temp=stack[top];
+            else 
+            {
+               stack[++top]=temp->right;
+               temp=stack[top];
+            }
+            
+        }
+       
+    }  
+}
+
+int main() {
+  
+    struct node* root = NULL;
+    
+    int t;
+    int data;
+
+    scanf("%d", &t);
+
+    while(t-- > 0) {
+        scanf("%d", &data);
+        root = insert(root, data);
+    }
+  
+	preOrder(root);
+    return 0;
+}

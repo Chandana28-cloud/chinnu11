@@ -1,0 +1,67 @@
+// quicksort program is very effecient sorting technique. 
+// Time complexity is O(n2)-->worst case.
+//                    O(nlogn)-->in average and best case.
+//Space complexity-->O(logn).
+//It is not adaptable (in case of sorting case this is not effecient).
+//It's stability is depends on how conditions are working and flow of programm.
+
+#include<stdio.h>
+void swap(int *a,int *b);
+void quicksort(int a[],int start,int end);
+int partition(int a[],int start,int end);
+
+// main code to print output and scan input data.
+int main()
+{
+    int i,n;
+    int a[100];
+    printf("enter no of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+       scanf("%d",&a[i]);
+    quicksort(a, 0, n-1);  // calling of function
+     for(i=0;i<n;i++)
+       printf("%d ",a[i]);
+    return 0;
+}
+
+// quicksort function to divide and recursive function to call quicksort againa and again.  
+void quicksort(int a[], int start, int end)
+{
+    int pindex;
+    if(start<end)
+    {
+        pindex=partition(a, start, end);  // calling to get index of partition element.
+        quicksort(a, start, pindex-1);
+        quicksort(a, pindex+1, end);
+    }
+}
+
+// partition program to sort as less than pivot at one side and greater elements at one side. 
+int partition(int a[], int start, int end)
+{
+    int pindex,pivot,i;
+    pindex=start;
+    pivot=a[end];    // selecting pivot element as end element(we select any random element).
+    for(i=start;i<end;i++)
+    {
+        if(a[i]<pivot)
+         {
+             swap(&a[i],&a[pindex]);
+              pindex++;
+         }
+    }
+    swap(&a[end],&a[pindex]);
+    return pindex;
+}
+
+// swap function.
+void swap(int *a,int *b)
+{
+    int t=*a;
+    *a=*b;
+    *b=t;
+}
+
+

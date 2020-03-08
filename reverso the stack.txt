@@ -1,0 +1,42 @@
+/* reverse the stack using stack operations */
+/* approach1 */
+
+#include<stdio.h>
+int top=-1;
+int main()
+{
+    int i,n,data,stack[100],stack1[100];
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&data);
+        stack[++top]=data;
+    }
+    int top1=-1;
+    for(i=0;i<n;i++)
+        stack1[++top1]=stack[top--];
+    for(i=0;i<n;i++)
+      printf("%d ",stack[i]);
+     for(i=0;i<n;i++)
+      printf("%d ",stack1[i]);  
+
+    return 0;
+}
+       
+/* approach2 */
+
+#include<stdio.h>
+int top=-1;
+int main()
+{
+    int i,n,data,stack[100],stack1[100];
+    scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+        scanf("%d",&data);
+        stack[++top]=data;
+    }
+    while(top>=0)
+     printf("%d ",stack[top--]);
+}
+       

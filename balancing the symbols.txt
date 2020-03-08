@@ -1,0 +1,35 @@
+/* balancing of symbols */
+/* approach1 */
+
+#include<stdio.h>
+int main()
+{
+    int i,top=-1,a[100],stack[100],flag=0;
+    gets(a);
+    for(i=0;a[i]!='\0';i++)
+    {
+        if(a[i]=='(' ||a[i]=='[' ||a[i]=='{')
+           stack[++top]=a[i];
+        else if(a[i]==')' ||a[i]=='}' ||a[i]==']') 
+        {
+           if(a[i]==')' && stack[top]=='(')
+             top--;
+           else if(a[i]==']' && stack[top]=='[')  
+              top--;
+           else if(a[i]=='}' && stack[top]=='{')  
+              top--;
+           else
+           {
+              flag=1; 
+              printf("brackets not matched");
+              break;
+           }
+        }
+    }
+    if(flag==0)
+       printf("brackets matched");
+    return 0;
+}
+
+/* approach2 */
+

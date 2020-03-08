@@ -1,0 +1,75 @@
+/* level order of tree */
+
+
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+struct node {
+int data;
+struct node *left;
+struct node *right;
+};
+struct node* insert( struct node* root, int data ) {
+        
+    if(root == NULL) {
+    
+struct node* node = (struct node*)malloc(sizeof(struct node));
+node->data = data;
+node->left = NULL;
+node->right = NULL;
+return node;
+     
+    } else {
+        struct node* cur;
+        
+        if(data <= root->data) {
+cur = insert(root->left, data);
+root->left = cur;
+        } else {
+cur = insert(root->right, data);
+root->right = cur;
+        }
+    
+        return root;
+    }
+}
+void levelOrder( struct node *root) {
+struct node* temp=root;
+int rear=-1,front=-1,i;
+struct node* queue[1000];
+while(temp->left!=NULL || temp->right!=NULL || rear!=front)
+{
+if(temp==root)
+printf("%d ",temp->data);
+if(temp->left!=NULL)
+{
+rear++;
+queue[rear]=temp->left;
+}
+if(temp->right!=NULL)
+{
+rear++;
+queue[rear]=temp->right;
+}
+front++;
+if(temp!=root)
+printf("%d ",temp->data);
+temp=queue[front];
+}
+if(rear==front)
+printf("%d ",temp->data);
+}
+int main() {
+struct node* root = NULL;
+int t;
+int data;
+scanf("%d", &t);
+while(t-- > 0) {
+scanf("%d", &data);
+root = insert(root, data);
+}
+    levelOrder(root);
+return 0;
+}
+

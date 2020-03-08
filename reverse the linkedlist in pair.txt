@@ -1,0 +1,54 @@
+/* reverse linkedlist in pair */
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    int data;
+    struct node *nxt;
+};
+struct node *head=NULL;
+void main()
+{
+    int i,n;
+    struct node *temp1;
+     struct node *temp;
+     scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+       temp1=(struct node *)malloc(sizeof(struct node));
+        scanf("%d",&temp1->data);
+        if(head==NULL)
+        {
+            head=temp1;
+            temp=temp1;
+        }
+        else
+        {
+            temp->nxt=temp1;
+            temp=temp1;
+        }
+    }
+    temp=head;
+    struct node *p=temp->nxt;
+    while(temp!=NULL && p!=NULL)
+    {
+       temp->nxt=p->nxt;
+       p->nxt=temp;
+       if(head==temp)
+           head=p;
+       else 
+           temp1->nxt=p;    
+        temp1=temp; 
+        temp=temp->nxt;
+        if(temp!=NULL)
+            p=temp->nxt;
+    }
+    temp=head;
+    while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->nxt;
+    }
+}
+

@@ -1,0 +1,125 @@
+/* linked list with even nos at first and odd at last */
+/* approach1 */
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *nxt;
+};
+struct node *head=NULL;
+void main()
+{
+    int i,n,t,a[100],m;
+    scanf("%d",&n);
+    struct node *temp;
+    struct node *temp1;
+    for(i=0;i<n;i++)
+    {
+       struct node *temp1=(struct node *)malloc(sizeof(struct node));
+        scanf("%d",&temp1->data);
+        if(head==NULL)
+        {
+            head=temp1;
+            temp=temp1;
+        }
+        else
+        {
+            temp->nxt=temp1;
+            temp=temp1;
+        }
+    }
+     temp=head;
+    for(i=0;i<n;i++)
+    {
+      a[i]=temp->data;
+      temp=temp->nxt;
+    }
+    for(i=0;i<n;i++)
+    {
+        if((a[i]%2)!=0)
+         continue;
+        else
+        {
+         if(i==0)
+          continue;
+         else
+         {
+            t=a[i];
+            m=i;
+            while(m>=0)
+            {
+                a[m]=a[m-1];
+                m=m-1;
+            }
+            a[0]=t;
+         }
+        }
+    }
+    for(i=0;i<n;i++)
+      printf("%d ",a[i]);
+}
+
+/* approach2 */
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node
+{
+    int data;
+    struct node *nxt;
+};
+struct node *head=NULL;
+void main()
+{
+    int i,n,a[100],j=0,k=0,m=0,a1[100],a2[100];
+    scanf("%d",&n);
+    struct node *temp;
+    struct node *temp1;
+    for(i=0;i<n;i++)
+    {
+       struct node *temp1=(struct node *)malloc(sizeof(struct node));
+        scanf("%d",&temp1->data);
+        if(head==NULL)
+        {
+            head=temp1;
+            temp=temp1;
+        }
+        else
+        {
+            temp->nxt=temp1;
+            temp=temp1;
+        }
+    }
+     temp=head;
+    for(i=0;i<n;i++)
+    {
+      a[i]=temp->data;
+      temp=temp->nxt;
+    }
+    for(i=0;i<n;i++)
+    {
+       if((a[i]%2)!=0)
+       {
+           a1[k]=a[i];
+           k++;
+       }
+       else
+       {
+           a2[j]=a[i];
+           j++;
+       }
+    }
+       for(i=0;i<j;i++)
+        a[i]=a2[i];
+       for(i=j;i<(k+j);i++)
+       {
+          a[i]=a1[m];
+          m++;
+       }
+    for(i=0;i<n;i++)
+      printf("%d ",a[i]);
+}
+
+

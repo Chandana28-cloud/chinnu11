@@ -1,0 +1,58 @@
+// selectionsort is in two ways ..
+//* in place -->finding minimum element and sort in same array.
+//           -->space complexity-->O(1).
+//* external place -->finding minimum element and copy in another array.
+//                 -->space complexity -->O(n).
+//but we use only in place technique, because of space complexity.
+// time complexity-->O(n2) in worst,best,average case.
+// It is not adaptable and stable. 
+// n2/2 comaprisions and n swaps.
+
+#include<stdio.h>
+void selectionsort(int a[],int high);
+void swap(int *a,int *b);
+void printArray(int a[],int n);
+// main funtion to called all the functions and getting elements
+int main()
+{
+    int i,n,a[100];
+    printf("enter no of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+      scanf("%d",&a[i]);
+    selectionsort(a,n); // function calling of selection sort. 
+    printArray(a,n);
+      return 0;
+}
+// selection sort function to get sorted elements.
+void selectionsort(int a[],int high)
+{
+  int minindex;
+  for(int i=0;i<high;i++)
+  {
+      minindex=i;
+      for(int j=i+1;j<high;j++)
+      {
+          if(a[j]<a[minindex])
+             minindex=j;       // finding minimum value.
+      }
+      swap(&a[minindex],&a[i]);   // swapping minimum value with starting indexes. 
+  }
+}
+//swap function.
+
+void swap(int *a ,int *b)
+{
+    int t=*a;
+    *a=*b;
+    *b=t;
+}
+// function to print sorted array elements.
+void printArray(int a[],int n)
+{
+    printf("elements after sorted are : \n");
+    for(int i=0;i<n;i++)
+        printf("%d ",a[i]);
+}
+

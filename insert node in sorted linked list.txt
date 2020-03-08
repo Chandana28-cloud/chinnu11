@@ -1,0 +1,50 @@
+/* Insert node in sorted LL */
+
+#include<stdio.h>
+#include<stdlib.h>
+struct node 
+{
+    int data;
+    struct node *nxt;
+};
+struct node *head=NULL;
+void main()
+{
+    int i,n;
+    struct node *temp1;
+    struct node *p;
+     struct node *temp;
+     scanf("%d",&n);
+    for(i=0;i<n;i++)
+    {
+       temp1=(struct node *)malloc(sizeof(struct node));
+        scanf("%d",&temp1->data);
+        if(head==NULL)
+        {
+            head=temp1;
+            temp=temp1;
+        }
+        else
+        {
+            temp->nxt=temp1;
+            temp=temp1;
+        }
+    }
+   temp1=(struct node *)malloc(sizeof(struct node));
+   scanf("%d",&temp1->data);
+   p=head;
+   temp=p->nxt;
+   while((temp1->data-temp->data)>0)
+   {
+      p=p->nxt;
+      temp=temp->nxt;
+   }
+   temp1->nxt=temp;
+   p->nxt=temp1;
+   temp=head;
+   while(temp!=NULL)
+    {
+        printf("%d ",temp->data);
+        temp=temp->nxt;
+    }
+}

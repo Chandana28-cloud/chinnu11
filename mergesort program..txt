@@ -1,0 +1,57 @@
+// mergesort is the sorting technique with lowest time complexity .we use divide and conquer method.
+// time complexity -->O(nlogn) in worst ,average and best case.
+// space complexity -->O(nlogn).
+//it is not inplace method.
+//It is not adoptable and it is stable.
+
+#include<stdio.h>
+void mergesort(int a[],int low,int high);
+void merge(int a[],int low,int mid,int high);
+int main()
+{
+    int i,n,a[100];
+    printf("enter no of elements");
+    scanf("%d",&n);
+    printf("enter elements");
+    for(i=0;i<n;i++)
+      scanf("%d",&a[i]);
+    mergesort(a,0,n-1);  
+    for(i=0;i<n;i++)
+      printf("%d ",a[i]);
+    return 0;
+}
+
+// merge sort program it divides at every mid point.
+void mergesort(int a[],int low,int high)
+{
+    if(low<high)    //it checks and satisfies until getting one block .
+    {
+        int mid=(low+high)/2;
+        mergesort(a,low,mid);
+        mergesort(a,mid+1,high);
+        merge(a,low,mid,high);     // it merge the blocks.
+    }
+}
+
+// merge function use to merge the divide blocks
+void merge(int a[],int low,int mid,int high)
+{
+    int i=low,k=low,j=mid+1,b[100];
+    while(i<=mid && j<=high)
+    {
+        if(a[i]<a[j])
+            b[k]=a[i++];
+        else            // consider two blocks and it comapre two nos and sort and merge into block.
+           b[k]=a[j++];
+        k++;   
+    }
+    while(i<=mid)
+      b[k++]=a[i++];
+    while(j<=high)
+      b[k++]=a[j++];      // if any extra elements are there then it add that no's into merge block.
+    for(i=low;i<=high;i++)
+      a[i]=b[i];
+}
+
+
+
