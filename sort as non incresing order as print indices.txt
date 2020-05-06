@@ -1,0 +1,72 @@
+import java.util.*;
+
+class Main 
+{
+public static void main(String args[])
+{
+    Scanner s = new Scanner(System.in);
+    int n = s.nextInt();
+    int arr[] = new int[n];
+    int in[] = new int[n];
+    for(int i=0;i<n;i++)
+        arr[i] = s.nextInt();
+    for(int i=0;i<n;i++)
+        in[i] = i;
+    Main m = new Main();
+    m.quicksort(arr,0,n-1,in);
+    for(int i=0;i<n;i++)
+        System.out.print(arr[i]+" ");
+    for(int i=0;i<n;i++)
+        System.out.print(in[i]+" ");
+}
+
+void quicksort(int a[], int start, int end, int[] in)
+{
+    int pindex;
+    if(start<end)
+    {
+        pindex=Main.partition(a, start, end, in);  
+        quicksort(a, start, pindex-1, in);
+        quicksort(a, pindex+1, end, in);
+    }
+}
+
+static int partition(int a[], int start, int end, int[] in)
+{
+    int pindex,pivot,i,t;
+    pindex=start;
+    pivot=a[end];    
+    for(i=start;i<end;i++)
+    {
+        if(a[i]<pivot)
+         {
+            t=a[i];
+            a[i]=a[pindex];
+            a[pindex]=t;
+            t=in[i];
+            in[i]=in[pindex];
+            in[pindex]=t;
+            pindex++;
+         }
+    }
+    t=a[end];
+    a[end]=a[pindex];
+    a[pindex]=t;
+    t=in[i];
+    in[i]=in[pindex];
+    in[pindex]=t;
+    return pindex;
+}
+    
+}
+
+////////////////////
+
+input : 5                                                                                                                             
+	4 5 3 7 1                                                                                                                     
+output :1 3 4 5 7 
+	4 2 0 1 3   
+
+
+
+  
