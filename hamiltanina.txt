@@ -1,0 +1,86 @@
+//print all hamiltanian paths
+
+import java.util.*;
+
+class Main 
+{
+    static class Graph 
+    {
+        int V;
+        LinkedList<Integer>[] adj;
+        Graph(int v)
+        {
+            V = v;
+            adj = new LinkedList[v];
+            for(int i=0;i<v;i++)
+            {
+                adj[i] = new LinkedList<>();
+            }
+        }
+    }
+    void addEdge(Graph graph, int src, int des )
+    {
+        graph.adj[src].addLast(des);
+        graph.adj[des].addLast(src);
+    }
+    static void printHamiltaninaPaths(Graph graph, List<Integer> path, boolean[] visited, int start)
+    {
+        if(path.size() == graph.V)
+        {
+            System.out.println(path);
+            return;
+        }
+        for(int edge : graph.adj[start])
+        {
+            if(visited[edge] == false && (!path.contains(edge)))
+            {
+                visited[edge] = true;
+                path.add(edge);
+	            printHamiltaninaPaths(graph, path, visited, edge);
+                visited[edge] = false;
+                path.remove(path.size() - 1);
+            }
+     
+        }
+    }
+    void hamiltaninaPaths(Graph graph)
+    {
+        List<Integer> path = new LinkedList<>();
+        boolean[] visited = new boolean[graph.V];
+        for(int i=0;i<graph.V;i++)
+        {
+            visited[i] = false;
+        }
+        path.add(0);
+        printHamiltaninaPaths(graph, path, visited, 0);
+    }
+    public static void main(String args[])
+    {
+        Scanner s = new Scanner(System.in);
+        Main m = new Main();
+        int v = 5;  //s.nextInt();
+        //int e = s.nextInt();
+        Graph graph = new Graph(v);
+       // for(int i=0;i<e;i++)
+       // {
+            //m.adEdge(graph, s.nextInt(), s.nextInt());
+            m.addEdge(graph, 0, 1);
+	        m.addEdge(graph, 0, 2);
+	        m.addEdge(graph, 0, 4);
+	        m.addEdge(graph, 2, 1);
+	        m.addEdge(graph, 4, 1);
+	        m.addEdge(graph, 3, 4);
+	        m.addEdge(graph, 2, 3);
+       // }
+        m.hamiltaninaPaths(graph);
+    }
+}
+
+
+output:
+[0, 1, 2, 3, 4]                                                                                                                 
+[0, 1, 4, 3, 2]                                                                                                                 
+[0, 2, 1, 4, 3]                                                                                                                 
+[0, 2, 3, 4, 1]                                                                                                                 
+[0, 4, 1, 2, 3]                                                                                                                 
+[0, 4, 3, 2, 1]      

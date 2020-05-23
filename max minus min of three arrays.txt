@@ -1,0 +1,112 @@
+import java.io.*;
+
+public class MinimizeOfMaxMin 
+{
+    public static void main(String args[])throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        int n1 = Integer.parseInt(br.readLine());
+        int n2 = Integer.parseInt(br.readLine());
+        int n3 = Integer.parseInt(br.readLine());
+        int arr1[] = new int[n1];
+        int arr2[] = new int[n2];
+        int arr3[] = new int[n3];
+        for(int i=0;i<n1;i++)
+            arr1[i] = Integer.parseInt(br.readLine());
+        for(int i=0;i<n2;i++)
+            arr2[i] = Integer.parseInt(br.readLine());
+        for(int i=0;i<n3;i++)
+            arr3[i] = Integer.parseInt(br.readLine());
+        MinimizeOfMaxMin m = new MinimizeOfMaxMin();
+        System.out.println(m.minDifference(arr1, n1, arr2, n2, arr3, n3));
+                    
+    }
+    int minDifference(int arr1[], int n1, int arr2[], int n2, int arr3[], int n3)
+    {
+        int i = n1 - 1;
+        int j = n2 - 1;
+        int k = n3 - 1;
+        int min_count = MinimizeOfMaxMin.getMaximum(arr1[i], arr2[j], arr3[k])-MinimizeOfMaxMin.getMinimum(arr1[i], arr2[j], arr3[k]);
+        int current_count = min_count;
+        int min = MinimizeOfMaxMin.getMinimum(arr1[i], arr2[j], arr3[k]);
+        while(i >= 0 && j >= 0 && k >= 0)
+        {
+            i = MinimizeOfMaxMin.nearestSearch(arr1, 0, i, min);
+            j = MinimizeOfMaxMin.nearestSearch(arr2, 0, j, min);
+            k = MinimizeOfMaxMin.nearestSearch(arr3, 0, k, min);
+            current_count = MinimizeOfMaxMin.getMaximum(arr1[i], arr2[j], arr3[k])-MinimizeOfMaxMin.getMinimum(arr1[i], arr2[j], arr3[k]);
+            min = MinimizeOfMaxMin.getMinimum(arr1[i], arr2[j], arr3[k]);
+            if(current_count < min_count)
+                min_count = current_count;
+            else if(current_count == min_count)
+                break;
+            if(min_count == 0 || min_count ==1) 
+                break;
+        }
+        return min_count;
+    }
+    static int nearestSearch(int arr[], int start, int end, int element)
+    {
+        if (start <= end ) 
+        { 
+            int mid = (start + end )/2; 
+            if (start == end)
+                return start;
+            else if(arr[end] == element)
+                return end;
+            else if (arr[mid] == element)
+                return mid;
+            else if((mid>start) && (mid<end) && (Math.abs((arr[mid-1] - element)) >= Math.abs((arr[mid] - element))) && (Math.abs((arr[mid] - element)) <= Math.abs((arr[mid+1] - element)))) 
+                return mid;
+            else if (arr[mid] > element) 
+                return nearestSearch(arr, start, mid-1 , element); 
+            else   
+                return nearestSearch(arr, mid+1 , end, element); 
+        }  
+        else
+            return -1;
+    }
+    static int getMinimum(int a, int b, int c)
+    {
+        if(a <= b && a <= c)
+            return a;
+        else if(b <= a && b <= c)
+            return b;
+        else 
+            return c;
+    }
+    static int getMaximum(int a, int b, int c)
+    {
+        if(a >= b && a >= c)
+            return a;
+        else if(b >= a && b >= c)
+            return b;
+        else 
+            return c;
+    }
+}
+
+//TEST CASES
+	input : n1 = 5, n2 = 3, n3 = 4
+		arr1 : [ 1, 4, 5, 8, 10 ]
+        	arr2 : [ 6, 9, 15 ]
+        	arr3 : [ 2, 3, 6, 6 ]
+	output: 1
+	input : n1 = 4, n2 = 5, n3 = 7
+		arr1 : { 5, 8, 10, 15 }
+                arr2 : { 6, 9, 15, 78, 89 }
+       		arr3 : { 2, 3, 6, 6, 8, 8, 10 }
+	output: 1
+	input : n1 = 6, n2 = 4, n3 = 4
+		arr1 : { 1, 2, 10, 13, 16, 20 }
+                arr2 : { 5, 35, 75, 80 }
+       		arr3 : { 5, 6, 7, 10 }
+	output: 3
+	input : n1 = 5, n2 = 4, n3 = 3
+		arr1 : [ 2, 5, 8, 10, 35 ]
+		arr2 : [ 25, 30, 38, 44 ]
+		arr3 : [ 10, 27, 40 ]
+	output: 5
+
+ 
+

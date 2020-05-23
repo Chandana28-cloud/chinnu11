@@ -1,0 +1,87 @@
+import java.util.*;
+
+class Main 
+{
+   
+    static class Graph 
+    {
+        int V;
+        LinkedList<Integer>[] adj;
+        Graph(int v)
+        {
+            V = v;
+            adj = new LinkedList[v];
+            for(int i=0;i<v;i++)
+            {
+                adj[i] = new LinkedList<>();
+            }
+        }
+    }
+   
+    void addEdge(Graph graph, int src, int des )
+    {
+        graph.adj[src].addLast(des);
+    }
+    static void allSorts(Graph graph, List<Integer> result, int[] inde, boolean[] visited)
+    {
+        if(result.size() == graph.V)
+        {
+            System.out.println(result);
+            return;
+        }
+        for (int i = 0; i < graph.V; i++) { 
+            if (visited[i] == false && inde[i] == 0) { 
+                visited[i] = true; 
+                result.add(i); 
+                for (int adjacent : graph.adj[i]) { 
+                    inde[adjacent]--; 
+                } 
+                allSorts(graph, result, inde, visited);
+                visited[i] = false; 
+                result.remove(result.size() - 1); 
+                for (int adjacent : graph.adj[i]) { 
+                    inde[adjacent]++; 
+                }
+            } 
+        } 
+    }
+    void topologicalSort(Graph graph)
+    {
+        boolean visited[] = new boolean[graph.V];
+        List<Integer> result = new LinkedList<>();
+        int inde[] = new int[graph.V];
+        for(int i=0;i<graph.V;i++)
+        {
+            visited[i] = false;
+            inde[i] = 0;
+        }
+        for(int i=0;i<graph.V;i++)
+        {
+            for(int edge : graph.adj[i])
+            {
+                inde[edge] += 1;
+            }
+        }
+        
+        allSorts(graph, result, inde, visited);
+    }
+    public static void main(String args[])
+    {
+        Scanner s = new Scanner(System.in);
+        Main m = new Main();
+        int v = 6;  //s.nextInt();
+        //int e = s.nextInt();
+        Graph graph = new Graph(v);
+       // for(int i=0;i<e;i++)
+       // {
+            //m.adEdge(graph, s.nextInt(), s.nextInt());
+        m.addEdge(graph, 5, 2); 
+        m.addEdge(graph, 5, 0); 
+        m.addEdge(graph, 4, 0); 
+        m.addEdge(graph, 4, 1); 
+        m.addEdge(graph, 2, 3); 
+        m.addEdge(graph, 3, 1); 
+       // }
+        m.topologicalSort(graph);
+    }
+}

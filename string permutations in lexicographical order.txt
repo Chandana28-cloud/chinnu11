@@ -1,0 +1,52 @@
+import java.util.*;
+
+class Main 
+{
+    static void stringPermutations(List<Character> result, char[] arr, int[] count, int len, int size)
+    {
+        if(result.size() == len){
+            System.out.println(result);
+            return;
+        }
+        for(int i=0;i<size;i++)
+        {
+            if(count[i] != 0)
+            {
+                result.add(arr[i]);
+                count[i] -= 1;
+                stringPermutations(result, arr, count, len, size);
+                count[i] += 1;
+                result.remove(result.size()-1);
+            }
+        }
+    }
+    static void permutations(String str)
+    {
+        List<Character> result = new LinkedList<>();
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i=0;i<str.length();i++)
+        {
+            if(map.containsKey(str.charAt(i)))
+            {
+                map.replace(str.charAt(i), map.get(str.charAt(i))+1);
+            }
+            map.putIfAbsent(str.charAt(i),1);
+        }
+        char arr[] = new char[map.size()];
+        int count[] = new int[map.size()];
+        int i=0;
+        for(Map.Entry<Character, Integer> pair : map.entrySet()){
+            arr[i] = pair.getKey();
+            count[i] = pair.getValue();
+            i++;
+        }
+        
+        stringPermutations(result, arr, count, str.length(), map.size());
+    }
+    public static void main(String args[])
+    {
+        Scanner s = new Scanner(System.in);
+        String str = s.next();
+        permutations(str);
+    }
+}

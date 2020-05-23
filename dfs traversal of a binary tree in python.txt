@@ -1,0 +1,43 @@
+from collections import defaultdict;
+
+class Tree:
+    def __init__(self, vertices):
+        self.graph = defaultdict(list);
+        self.V = vertices
+    def addEdge(self, u, v):
+        self.graph[u].append(v)
+    def dfsTraversalUtil(self, value, visited):
+        visited[value-1] = True
+        print(value, end = " ")
+        for i in self.graph[value]:
+            if(visited[i-1] == False):
+                self.dfsTraversalUtil(i, visited)
+    def dfsTraversal(self):
+        visited = [False]*(self.V)
+        print(self.graph)
+        print(visited)
+        for i in self.graph:
+            if(visited[i-1] == False):
+                self.dfsTraversalUtil(i, visited)
+            
+n = 16
+k = 4
+t = Tree(16)
+t.addEdge(1, 2)
+t.addEdge(1, 3)
+t.addEdge(2, 4)
+t.addEdge(2, 8)
+t.addEdge(4, 5)
+t.addEdge(4, 9)
+t.addEdge(9, 10)
+t.addEdge(9, 11)
+t.addEdge(10, 15)
+t.addEdge(8, 12)
+t.addEdge(8, 13)
+t.addEdge(13, 16)
+t.addEdge(3, 6)
+t.addEdge(3, 7)
+t.addEdge(7, 14)
+t.dfsTraversal()
+
+#Dfs traversal of a binary tree using defaultdict ..as graph length must be equal ..it doesnot change during iteration

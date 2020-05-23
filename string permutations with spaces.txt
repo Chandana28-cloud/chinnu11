@@ -1,0 +1,48 @@
+/* Function to fing string with spaces between them ...*/
+
+import java.io.*;
+
+class Main 
+{
+    public static void main(String args[])throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+        stringSpaces(str);
+    }
+    static void stringSpaces(String str)
+    {
+        char[] ch = str.toCharArray();
+        int len = str.length();
+        char out[] = new char[2*len];
+        out[0] = ch[0];
+        stringSpacesUtil(ch, out, 1, 1, len);
+    }
+    static void stringSpacesUtil(char[] ch, char[] out, int i, int j, int len)
+    {
+        if(j == len)
+        {
+            out[i] = '\0';
+            System.out.println(out);
+            return;
+        }
+        out[i] =  ch[j];
+        stringSpacesUtil(ch, out, i+1, j+1, len);
+        
+        out[i] = ' ';
+        out[i+1] = ch[j];
+        stringSpacesUtil(ch, out, i+2, j+1, len);
+    }
+}
+
+
+input: "abcd"
+output:
+abcd
+abc d   
+ab cd   
+ab c d   
+a bcd   
+a bc d   
+a b cd   
+a b c d 

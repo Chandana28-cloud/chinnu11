@@ -1,0 +1,60 @@
+import java.util.*;
+import java.io.*;
+
+class Main 
+{
+    static void combination(String str)
+    {
+        Map<Character, Integer> map = new HashMap<>();
+        for(int i=0;i<str.length();i++)
+        {
+            if(map.containsKey(str.charAt(i)))
+            {
+                map.replace(str.charAt(i), map.get(str.charAt(i))+1);
+            }
+            map.putIfAbsent(str.charAt(i),1);
+        }
+        char[] input = new char[map.size()];
+        int[] count = new int[map.size()];
+       char[] res = new char[str.length()];
+        int i=0;
+        for(Map.Entry<Character, Integer> entry : map.entrySet())
+        {
+            input[i] = entry.getKey();
+            count[i] = entry.getValue();
+            i++;
+        }
+        stringcombination(res, input, count, str.length(), map.size(), 0);
+       
+    }
+    
+    static void stringcombination(char[] res, char input[], int count[], int len, int size, int pos)
+    {
+        if(pos == len)
+            return;
+        for(int i=0;i<size;i++)
+        {
+            if(count[i] == 0)
+                continue;
+            count[i]--;    
+            res[pos] = input[i];
+            for(int j=0;j<=pos;j++)
+            {
+                System.out.print(res[j]+" ");
+            }
+            System.out.println();
+            // if(count[pos] == 0)
+                stringcombination(res, input, count,len, size, pos+1);
+             //else
+               // stringcombination(res, input, count,len, size, pos);
+            count[i]++;
+        }
+    }
+    public static void main(String args[])throws IOException
+    {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        String str = br.readLine();
+        Main m = new Main();
+        combination(str);
+    }
+}

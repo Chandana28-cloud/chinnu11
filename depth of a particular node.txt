@@ -1,0 +1,54 @@
+import java.util.*;
+
+class Main 
+{
+    static class Node 
+    {
+        int data;
+        Node left, right;
+        Node(int d)
+        {
+            data = d;
+            left = right = null;
+        }
+    }
+    static int depth(Node root)
+    {
+        if(root == null)
+            return 0;
+        int ldep = depth(root.left);
+        int rdep = depth(root.right);
+        if(ldep > rdep)
+            return (1+ldep);
+        else
+            return (1+rdep);
+    }
+    static void find(Node root, int key)
+    {
+        if(root.data == key)
+        {
+            System.out.println(depth(root));
+            return;
+        }
+        if(root.left != null)
+            find(root.left, key);
+        if(root.right != null)
+            find(root.right, key);
+    }
+    public static void main(String args[])
+    {
+        int key = 1; // the node we have to calculate of it depth .
+        Node root = null;
+        root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.left.right.left = new Node(10);
+        root.right.right = new Node(7);
+        root.right.right.left = new Node(8);
+        root.right.right.right = new Node(9);
+        find(root, key);
+    }
+}
+

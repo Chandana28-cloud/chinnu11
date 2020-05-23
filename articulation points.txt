@@ -1,0 +1,90 @@
+import java.io.*; 
+import java.util.*; 
+
+class Main 
+{ 
+    int time = 0;
+    static int NIL = -1;
+    static class Graph
+    {
+        int V; 
+        LinkedList<Integer> adj[]; 
+        Graph(int v) 
+        { 
+            V = v; 
+            adj = new LinkedList[v]; 
+            for (int i=0; i<v; ++i) 
+                adj[i] = new LinkedList(); 
+        } 
+    }
+  
+    void addEdge(Graph graph, int u, int w) 
+    { 
+       graph.adj[u].addLast(w);  
+       graph.adj[w].addLast(u);    
+    } 
+  
+    void APUtil(Graph graph, int u, boolean Visited[], int disc[], int low[], int parent[], boolean ap[]) 
+    { 
+        int children = 0; 
+        Visited[u] = true; 
+        disc[u] = low[u] = ++time; 
+        for(int edge : graph.adj[u])
+        { 
+            if (!Visited[edge]) 
+            { 
+                children++; 
+                parent[edge] = u; 
+                APUtil(graph, edge, Visited, disc, low, parent, ap); 
+                low[u]  = Math.min(low[u], low[edge]); 
+                if (parent[u] == NIL && children > 1) 
+                    ap[u] = true; 
+  
+                if (parent[u] != NIL && low[edge] >= disc[u]) 
+                    ap[u] = true; 
+            } 
+            else if (edge!= parent[u]) 
+                low[u]  = Math.min(low[u], disc[edge]); 
+        } 
+    } 
+
+    void AP(Graph graph) 
+    { 
+        boolean Visited[] = new boolean[graph.V]; 
+        int disc[] = new int[graph.V]; 
+        int low[] = new int[graph.V]; 
+        int parent[] = new int[graph.V]; 
+        boolean ap[] = new boolean[graph.V]; 
+        for (int i = 0; i < graph.V; i++) 
+        { 
+            parent[i] = NIL; 
+            Visited[i] = false; 
+            ap[i] = false; 
+        } 
+  
+        for (int i = 0; i < graph.V; i++) 
+        {
+            if (Visited[i] == false) 
+                APUtil(graph, i, Visited, disc, low, parent, ap); 
+        }
+  
+        for (int i = 0; i < graph.V; i++) 
+        {
+            if (ap[i] == true) 
+                System.out.print(i+" "); 
+        }
+    } 
+    public static void main(String args[]) 
+    { 
+        Main m = new Main();
+        System.out.println("Articulation points in first graph "); 
+        Graph g1 = new Graph(5);  
+        m.addEdge(g1, 1, 0); 
+        m.addEdge(g1, 0, 2); 
+        m.addEdge(g1, 2, 1); 
+        m.addEdge(g1, 0, 3); 
+        m.addEdge(g1, 3, 4); 
+        m.AP(g1); 
+        System.out.println(); 
+    } 
+} 

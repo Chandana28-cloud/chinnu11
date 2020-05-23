@@ -1,0 +1,93 @@
+// min colours required to fill the graph without adjacent combine;
+
+import java.util.*;
+
+class Main 
+{
+    static class Graph 
+    {
+        int V;
+        LinkedList<Integer>[] adj;
+        Graph(int v)
+        {
+            V = v;
+            adj = new LinkedList[v];
+            for(int i=0;i<v;i++)
+            {
+                adj[i] = new LinkedList<>();
+            }
+        }
+    }
+   
+    void addEdge(Graph graph, int src, int des )
+    {
+        graph.adj[src].addLast(des);
+        graph.adj[des].addLast(src);
+    }
+    static void minColours(Graph graph, int colours[], boolean visited[], int min_colours)
+    {
+        for(int i=0;i<graph.V;i++)
+        {
+            int flag = 0;
+            if(visited[i] == false)
+            {
+                Set<Integer> set = new HashSet<>();
+                for(int adj : graph.adj[i])
+                {
+                    set.add(colours[adj]);
+                }
+                for(int colour=1;colour<=min_colours;colour++)
+                {
+                    if(!set.contains(colour))
+                    {
+                        colours[i] = colour;
+                        flag = 1;
+                        break;
+                    }
+                }
+                if(flag == 0)
+                {
+                    colours[i] = min_colours+1;
+                    min_colours++;
+                }
+            }
+        }
+        System.out.println(min_colours);
+    }
+    static void graphColouring(Graph graph)
+    {
+        boolean visited[] = new boolean[graph.V];
+        int colours[] = new int[graph.V];
+        for(int i=1;i<graph.V;i++)
+        {
+            visited[i] = false;
+            colours[i] = 0;
+        }
+        visited[0] = true;
+        
+        minColours(graph, colours, visited,0);
+    }
+    public static void main(String args[])
+    {
+        Scanner s = new Scanner(System.in);
+        Main m = new Main();
+        int v = 6;  //s.nextInt();
+        //int e = s.nextInt();
+        Graph graph = new Graph(v);
+       // for(int i=0;i<e;i++)
+       // {
+            //m.adEdge(graph, s.nextInt(), s.nextInt());
+        m.addEdge(graph, 5, 2); 
+        m.addEdge(graph, 5, 0); 
+        m.addEdge(graph, 4, 0); 
+        m.addEdge(graph, 4, 1); 
+        m.addEdge(graph, 2, 3); 
+        m.addEdge(graph, 3, 1);
+        m.addEdge(graph, 3, 5);
+        m.addEdge(graph, 2, 4);
+       // }
+        graphColouring(graph);
+    }
+}
+
+// output : 2

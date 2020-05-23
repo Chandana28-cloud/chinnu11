@@ -1,0 +1,105 @@
+import java.util.*;
+  
+public class Main { 
+    class node1 { 
+        int dest; 
+        int weight; 
+        node1(int a, int b) 
+        { 
+            dest = a; 
+            weight = b; 
+        } 
+    } 
+    static class Graph { 
+        int V; 
+        LinkedList<node1>[] adj; 
+        Graph(int e) 
+        { 
+            V = e; 
+            adj = new LinkedList[V]; 
+            for (int o = 0; o < V; o++) 
+                adj[o] = new LinkedList<>(); 
+        } 
+    } 
+    class node { 
+        int vertex; 
+        int key; 
+    } 
+    class comparator implements Comparator<node> { 
+  
+        @Override
+        public int compare(node node0, node node1) 
+        { 
+            if(node0.key > node1.key)
+                return 1;
+            else
+                return 0;
+        } 
+    } 
+  
+    void addEdge(Graph graph, int src, int dest, int weight) 
+    { 
+  
+        node1 node0 = new node1(dest, weight); 
+        node1 node = new node1(src, weight); 
+        graph.adj[src].addLast(node0); 
+        graph.adj[dest].addLast(node); 
+    } 
+  
+    void prims_mst(Graph graph) 
+    { 
+        Boolean[] set = new Boolean[graph.V]; 
+        node[] e = new node[graph.V]; 
+        int[] parent = new int[graph.V]; 
+  
+        for (int o = 0; o < graph.V; o++) 
+            e[o] = new node(); 
+  
+        for (int o = 0; o < graph.V; o++) { 
+            set[o] = false; 
+            e[o].key = Integer.MAX_VALUE; 
+            e[o].vertex = o; 
+            parent[o] = -1; 
+        } 
+        set[0] = true; 
+        e[0].key = 0; 
+  
+        Queue<node> queue = new PriorityQueue<>(new comparator()); 
+  
+        for (int o = 0; o < graph.V; o++) 
+            queue.add(e[o]); 
+        while (!queue.isEmpty()) { 
+            node node0 = queue.poll(); 
+            set[node0.vertex] = true; 
+            for (node1 edge : graph.adj[node0.vertex]) { 
+                if (set[edge.dest] == false) { 
+                    if (e[edge.dest].key > edge.weight) { 
+                        queue.remove(e[edge.dest]); 
+                        e[edge.dest].key = edge.weight; 
+                        queue.add(e[edge.dest]); 
+                        parent[edge.dest] = node0.vertex; 
+                    } 
+                } 
+            } 
+        } 
+        for (int o = 1; o < graph.V; o++) 
+            System.out.println(parent[o] + "-" + o); 
+    } 
+  
+    public static void main(String args[])
+    {
+        
+        Scanner s = new Scanner(System.in);
+        int vert = s.nextInt();
+        int edges = s.nextInt();
+        Main e = new Main();
+        Graph graph = new Graph(vert);
+        for(int i=0;i<edges;i++)
+        {
+            e.addEdge(graph, s.nextInt(), s.nextInt(), s.nextInt());
+        }
+        e.prims_mst(graph); 
+    }
+     
+} 
+

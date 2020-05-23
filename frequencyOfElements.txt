@@ -1,0 +1,56 @@
+import java.io.*;
+
+public class Main
+{
+	public static void main(String[] args)throws IOException
+	{
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		Main m = new Main();
+		int n = Integer.parseInt(br.readLine());
+		int arr[] = new int[n];
+		for(int i=0;i<n;i++)
+		    arr[i] = Integer.parseInt(br.readLine());
+		int key = Integer.parseInt(br.readLine());
+		int count = m.frequency(arr, n-1, key);
+		System.out.println(count);
+	}
+	int frequency(int arr[], int n ,int key)
+	{
+	    int count = 0, i, j;
+	    int mid =n/2;
+	    if(n%2 == 0)
+	       i = j = mid;
+	    else
+	    {
+	        i = mid;
+	        j = mid+1;
+	    }
+	    mid = n/2;
+	    while(i >= 0 && j<=n)
+	    {
+	        if(arr[i] == key)
+	           count++;
+	        if(arr[j] == key)
+	           count++;
+	        if(i == j)
+	           count--;
+	       i--;
+	       j++;
+	    }
+	 return count;   
+	}
+}
+
+//TestCases
+	input : 6
+		-1 2 3 3 1 2 
+		-1
+	output: -1
+	input : 7
+		-1 5 5 -1 2 3 4 
+		-1
+	output: 2
+	input : 5
+		1 2 3 4 5
+		6
+	output: 0

@@ -1,0 +1,52 @@
+import java.util.*;
+
+class Main 
+{
+    static class Node 
+    {
+        int data;
+        Node left, right;
+        Node(int d)
+        {
+            data = d;
+            left = right = null;
+        }
+    }
+    static void topView(Map<Integer, Integer> map, Node temp, int level)
+    {
+        map.putIfAbsent(level, temp.data);
+        if(temp.left != null)
+            topView(map, temp.left, level-1);
+        if(temp.right != null)
+            topView(map, temp.right, level+1);
+        
+    }
+    void top(Node root)
+    {
+        Map<Integer, Integer> map = new HashMap<>();
+        topView(map, root, 0);
+        Set<Integer> set = map.keySet();
+        int min = Collections.min(set);
+        int max = Collections.max(set);
+        for(int i=min;i<=max;i++)
+        {
+            System.out.print(map.get(i) + " ");
+        }
+    }
+    public static void main(String args[])
+    {
+        Main m = new Main();
+        Node root = null;
+        root = new Node(1);
+        root.left = new Node(2);
+        root.right = new Node(3);
+        root.left.left = new Node(4);
+        root.left.right = new Node(5);
+        root.left.right.left = new Node(10);
+        root.right.right = new Node(7);
+        root.right.right.left = new Node(8);
+        root.right.right.right = new Node(9);
+        m.top(root);
+    }
+}
+
